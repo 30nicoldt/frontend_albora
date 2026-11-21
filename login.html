@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alborá - Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --nav-bg: #191613;
+            --text-light: #E8DECB;
+            --gold: #C5A253;
+            --section-bg: #0F0D0B;
+            --border: #3D3733;
+            --input-bg: #1A1614;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-light);
+            font-family: 'Jost', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #2a2015 0%, var(--section-bg) 70%);
+        }
+
+        /* --- HEADER / LOGO --- */
+        .header-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header-logo img {
+            height: 40px; /* Adjust mo na lang kung gaano kalaki gusto mo */
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .header-logo h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        /* --- CONTAINER --- */
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- FORMS --- */
+        .auth-form {
+            display: none; /* Nakatago lahat by default */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .auth-form.active {
+            display: block; /* Ipapakita lang kung active */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .form-subtitle {
+            font-size: 12px;
+            color: #A0988A;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* --- INPUTS --- */
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9E9585;
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            padding: 14px 15px;
+            font-size: 14px;
+            font-family: 'Jost', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            border-color: var(--gold);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            width: 100%;
+            background: var(--gold);
+            color: var(--nav-bg);
+            border: none;
+            padding: 16px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-primary:hover {
+            background: #a98b3f;
+        }
+
+        /* --- LINKS --- */
+        .form-links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #A0988A;
+        }
+        .form-links a {
+            color: var(--gold);
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+        .divider {
+            margin: 0 10px;
+            color: var(--border);
+        }
+
+        /* --- ERROR MESSAGES --- */
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+        .form-input.invalid {
+            border-color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGO SA TAAS -->
+    <div class="header-logo">
+        <!-- Palitan mo ito ng totoong logo path mo, halimbawa: <img src="logo.png" alt="Alborá Logo"> -->
+        <img src="logo.png" alt="Alborá Logo" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='block';">
+        <h1 id="fallbackLogo" style="display:none;">ALBORÁ</h1>
+        <p style="font-size:10px; color:#A0988A; letter-spacing:2px; text-transform:uppercase; margin-top:5px;">Small luxuries, beautifully given</p>
+    </div>
+
+    <div class="auth-container">
+        
+        <!-- 1. LOGIN FORM -->
+<div class="auth-form" id="form-login">
+                <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">Sign in to access your orders, wishlist, and exclusive offers.</p>
+            
+            <div class="input-group">
+                <label class="input-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="you@example.com" id="loginEmail">
+                <div class="error-msg" id="err-login-email">Please enter a valid email.</div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input type="password" class="form-input" placeholder="••••••••" id="loginPass">
+                <div class="error-msg" id="err-login-pass">Please enter your password.</div>
+            </div>
+            
+            <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+            
+            <div class="form-links">
+                <a onclick="switchForm('forgot')">Forgot password?</a>
+                <span class="divider">|</span>
+                <a onclick="switchForm('signup')">Create account</a>
+            </div>
+        </div>
+
+        <!-- 2. SIGN-UP FORM -->
+<div class="auth-form active" id="form-signup">
+                <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">Join Alborá and enjoy a seamless gifting experience.</p>
+            
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="Juan Dela Cruz" id="signupName">
+                <div class="error-msg" id="err-signup-name">Please enter your full name.</div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="you@example.com" id="signupEmail">
+                <div class="error-msg" id="err-signup-email">Please enter a valid email.</div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input type="password" class="form-input" placeholder="Create a password" id="signupPass">
+                <div class="error-msg" id="err-signup-pass">Password must be at least 6 characters.</div>
+            </div>
+            
+            <button class="btn-primary" onclick="handleSignup()">Sign Up</button>
+            
+            <div class="form-links">
+                Already have an account? <a onclick="switchForm('login')">Sign in</a>
+            </div>
+        </div>
+
+        <!-- 3. FORGOT PASSWORD FORM -->
+        <div class="auth-form" id="form-forgot">
+            <h2 class="form-title">Reset Password</h2>
+            <p class="form-subtitle">Enter your email and we'll send you a link to reset your password.</p>
+            
+            <div class="input-group">
+                <label class="input-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="you@example.com" id="forgotEmail">
+                <div class="error-msg" id="err-forgot-email">Please enter a valid email.</div>
+            </div>
+            
+            <button class="btn-primary" onclick="handleForgot()">Send Reset Link</button>
+            
+            <div class="form-links">
+                Remember your password? <a onclick="switchForm('login')">Back to login</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Function para magpalit-palit ng forms (Login, Signup, Forgot)
+        function switchForm(formName) {
+            // Itago lahat ng forms
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+                // Clear errors and inputs
+                form.querySelectorAll('.form-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('invalid');
+                });
+                form.querySelectorAll('.error-msg').forEach(err => err.style.display = 'none');
+            });
+
+            // Ipakita yung pinindot
+            document.getElementById('form-' + formName).classList.add('active');
+        }
+
+        // Helper para magpakita ng error sa specific input
+        function showError(inputId, errorId) {
+            document.getElementById(inputId).classList.add('invalid');
+            document.getElementById(errorId).style.display = 'block';
+        }
+
+        // --- LOGIN LOGIC ---
+       function handleLogin() {
+    // ... existing validation code ...
+    if (!isValid) return;
+
+    localStorage.setItem('alboraUser', email.value);
+    
+    // I-check kung may redirect URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectTo = urlParams.get('redirect') || 'home'; // Default sa home
+    
+    if(redirectTo === 'checkout') {
+        window.location.href = 'checkout.html';
+    } else {
+        window.location.href = 'home.html';
+    }
+}
+
+         
+
+        // --- SIGN-UP LOGIC ---
+    function handleSignup() {
+    // ... existing validation code ...
+    if (!isValid) return;
+
+    localStorage.setItem('alboraUser', email.value);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectTo = urlParams.get('redirect') || 'home';
+    
+    if(redirectTo === 'checkout') {
+        window.location.href = 'checkout.html';
+    } else {
+        window.location.href = 'home.html';
+    }
+}
+        // --- FORGOT PASSWORD LOGIC ---
+        function handleForgot() {
+            let email = document.getElementById('forgotEmail');
+            let isValid = true;
+
+            // Reset errors
+            email.classList.remove('invalid'); document.getElementById('err-forgot-email').style.display = 'none';
+
+            if (!email.value.includes('@') || !email.value.includes('.')) {
+                showError('forgotEmail', 'err-forgot-email'); isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Dito mo ilalagay yung totoong forgot password backend logic
+            alert("Reset link sent to your email! (Prototype only)");
+            switchForm('login');
+        }
+    </script>
+</body>
+</html>

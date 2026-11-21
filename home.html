@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alborá</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --nav-bg: #191613;       
+            --text-light: #E8DECB;   
+            --gold: #C5A253;         
+            --panel-dark: #5A3C08; 
+            --section-bg: #0F0D0B; 
+        }
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100vw;
+            height: 100%;
+            font-family: 'Jost', sans-serif;
+            background-color: var(--panel-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- TOP BAR --- */
+        .top-bar {
+            background-color: #F0D890;
+            color: #333;
+            font-size: 10px;
+            text-align: center;
+            padding: 8px 5px;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: var(--nav-bg);
+            padding: 0; 
+            height: 60px; 
+            width: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 9999;
+        }
+
+        .nav-container {
+            width: 100%;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 20px; flex: 1; }
+        .nav-link { color: var(--text-light) !important; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; }
+        .brand-logo-container { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .brand-logo-img { height: 30px; width: auto; object-fit: contain; }
+        .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
+        
+        .bag-btn { color: var(--text-light); text-decoration: none; font-size: 10px; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
+        .bag-badge { background-color: var(--gold); color: var(--nav-bg); font-size: 9px; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; }
+
+        .hamburger-btn { display: none; background: none; border: none; cursor: pointer; padding: 5px; }
+        .hamburger-btn .bar { display: block; width: 22px; height: 2px; background-color: var(--text-light); margin: 4px 0; }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            padding: 15px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 999;
+        }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a { display: block; color: var(--text-light); text-decoration: none; padding: 10px 0; font-size: 12px; text-transform: uppercase; }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: calc(100vh - 90px); 
+            display: flex;
+            align-items: center; 
+            background-image: url('hero-bg.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden; 
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(20, 15, 12, 0.95) 0%, rgba(20, 15, 12, 0.7) 45%, rgba(20, 15, 12, 0) 100%);
+            z-index: 1;
+        }
+
+        .hero-content-wrapper {
+            position: relative; 
+            z-index: 2; 
+            width: 100%; 
+            padding-left: 8%; 
+            padding-right: 8%;
+        }
+
+        .eyebrow-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .eyebrow { 
+            font-size: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            color: var(--gold); 
+            margin: 0;
+        }
+
+        .eyebrow-line {
+            width: 40px;
+            height: 1px;
+            background-color: var(--gold);
+            opacity: 0.5;
+        }
+        
+        .hero-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(50px, 6vw, 90px); 
+            line-height: 1.1; 
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        .hero-title em { 
+            font-style: italic; 
+            color: var(--gold); 
+            font-weight: 400;
+        }
+
+        .hero-text { 
+            font-size: 15px; 
+            color: var(--text-light); 
+            line-height: 1.6; 
+            margin-bottom: 40px; 
+            max-width: 350px; 
+            opacity: 0.8; 
+        }
+
+        .btn-shop {
+            background-color: transparent; 
+            color: var(--text-light); 
+            border: 1px solid rgba(232, 222, 203, 0.4); 
+            padding: 15px 30px; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            text-decoration: none; 
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        .btn-shop:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .btn-shop i { font-size: 14px; }
+
+        /* --- SHOP BY CATEGORY SECTION --- */
+        .category-section {
+            background-color: var(--section-bg);
+            padding: 50px 0;
+            position: relative;
+            z-index: 10; 
+        }
+
+        .category-header { margin-bottom: 25px; padding-left: 15px; }
+        .eyebrow-dark { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #9E9585; display: block; margin-bottom: 5px; }
+        .category-title { font-family: 'Bodoni Moda', serif; font-size: 32px; color: var(--text-light); margin: 0; }
+        
+        .category-card { display: block; text-decoration: none; cursor: default; }
+        
+        .card-image-wrapper { 
+            background: linear-gradient(180deg, #3D3620 0%, #2A2516 100%); 
+            aspect-ratio: 1/1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            transition: 0.3s;
+        }
+        .category-card:hover .card-image-wrapper { border-color: var(--gold); }
+        .placeholder-icon { font-size: 70px; color: var(--gold); opacity: 0.8; transition: 0.3s; }
+        .category-card:hover .placeholder-icon { transform: scale(1.1); }
+
+        .card-footer-info { display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; }
+        .cat-name { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); font-weight: 500; }
+        .cat-count { font-size: 10px; color: #888; }
+
+        /* --- GIFT STUDIO SECTIONS --- */
+        .gift-studio-section { padding: 0 0 40px 0; background-color: var(--section-bg); }
+        .studio-box { border: 1px solid rgba(255,255,255,0.08); padding: 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; background: rgba(255,255,255,0.02); margin: 0 15px; }
+        .studio-content { flex: 1; max-width: 700px; }
+        .studio-title { font-family: 'Bodoni Moda', serif; font-size: 32px; color: var(--text-light); margin: 10px 0 15px 0; }
+        .studio-text { color: #A0988A; font-size: 15px; line-height: 1.6; margin: 0; }
+        .studio-action { flex: 0 0 auto; display: flex; justify-content: flex-end; }
+        .btn-studio { background-color: var(--gold); color: var(--nav-bg); padding: 16px 32px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; font-weight: 500; display: block; text-align: center; width: 100%; max-width: 300px; transition: 0.3s; }
+        .btn-studio:hover { background-color: #a98b3f; }
+
+        /* --- BEST SELLERS CAROUSEL --- */
+        .slider-wrapper { position: relative; overflow: hidden; margin: 0 10px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); }
+        .slider-container { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
+        .slide { flex: 0 0 100%; display: flex; align-items: center; padding: 30px; gap: 30px; min-height: 300px; }
+        .slide-art { flex: 0 0 200px; height: 250px; background: linear-gradient(180deg, #3D3620 0%, #2A2516 100%); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
+        .slide-art svg { width: 100px; height: 125px; }
+        .slide-info { flex: 1; }
+        .slide-info .cc-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); display: block; margin-bottom: 10px; }
+        .slide-info .cc-name { font-family: 'Bodoni Moda', serif; font-size: 28px; color: var(--text-light); margin: 0 0 15px 0; line-height: 1.1; }
+        .slide-info .cc-desc { font-size: 14px; color: #A0988A; line-height: 1.6; margin: 0 0 20px 0; max-width: 500px; }
+        .slide-info .cc-price { font-size: 20px; color: var(--text-light); font-weight: 500; }
+        .slider-dots { display: flex; justify-content: center; gap: 8px; padding: 15px 0; background: rgba(255,255,255,0.02); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s; }
+        .dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+
+        /* --- SHOP GRID --- */
+        .shop-section { background-color: var(--section-bg); padding: 40px 0; }
+        .shop-header { margin-bottom: 20px; padding: 0 15px; }
+        .shop-title { font-family: 'Bodoni Moda', serif; font-size: 42px; color: var(--text-light); margin: 0; }
+        .filter-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .filter-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+        .filter-chips::-webkit-scrollbar { display: none; }
+        .chip { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 8px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; white-space: nowrap; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .chip:hover, .chip.active { background: var(--gold); color: var(--nav-bg); border-color: var(--gold); }
+        
+        .filter-actions { display: flex; align-items: center; gap: 15px; margin-left: auto; }
+        .sort-wrapper { display: flex; align-items: center; gap: 15px; position: relative; }
+        .sort-select { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 8px 35px 8px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E8DECB%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 12px top 50%; background-size: 10px auto; }
+        .sort-select option { background: var(--nav-bg); color: var(--text-light); }
+        
+        .btn-toggle-filters { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 8px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; align-items: center; gap: 8px; }
+        .btn-toggle-filters::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid var(--text-light); transition: transform 0.3s ease; }
+        .btn-toggle-filters.open::after { transform: rotate(180deg); }
+
+        .shop-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px 15px; 
+            padding: 0 15px; 
+            align-items: stretch; 
+        }
+
+        .product-card { 
+            display: flex; 
+            flex-direction: column; 
+            text-decoration: none; 
+            position: relative; 
+            height: 100%; 
+        }
+        
+        /* --- SUB-FILTER BARS --- */
+        .sub-filter-bar { display: none; padding: 0 15px 15px 15px; flex-direction: column; gap: 15px; }
+        .sub-filter-bar.visible { display: flex; }
+        .sub-filter-row { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .sub-filter-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #9E9585; white-space: nowrap; width: 120px; flex-shrink: 0; }
+        .sub-chip { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); padding: 8px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; white-space: nowrap; transition: 0.3s; }
+        .sub-chip:hover, .sub-chip.active { background: var(--gold); color: var(--nav-bg); border-color: var(--gold); }
+        .search-input { width: 100%; max-width: 500px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 10px 15px; font-size: 12px; font-family: 'Jost', sans-serif; }
+        .search-input::placeholder { color: #888; }
+
+        /* --- PRODUCT CARDS --- */
+        .product-art { 
+            background: linear-gradient(180deg, #3D3620 0%, #2A2516 100%); 
+            aspect-ratio: 1/1; 
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            position: relative; 
+            flex-shrink: 0; 
+        }
+        .product-art svg { width: 80px; height: 100px; }
+        .sale-pill, .new-pill { position: absolute; top: 10px; left: 10px; background: var(--gold); color: var(--nav-bg); font-size: 10px; padding: 3px 8px; font-weight: 500; }
+        .product-info { 
+            padding-top: 12px; 
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-height: 85px; 
+        } 
+        .product-name { 
+            font-family: 'Jost', sans-serif; 
+            font-size: 13px; 
+            color: var(--text-light); 
+            margin: 0 0 5px 0; 
+            font-weight: 400; 
+            line-height: 1.3; 
+            min-height: 34px; 
+        }
+        .product-price { font-size: 14px; color: var(--text-light); font-weight: 500; margin-bottom: 5px; }
+        .product-price s { color: #888; font-size: 12px; font-weight: 300; margin-left: 5px; }
+        .product-meta { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 3px; 
+            font-size: 11px; 
+            color: #888; 
+            margin-top: auto; 
+            padding-right: 40px; 
+        }
+        .stock-good { color: #7FC49B; }
+        .stock-warn { color: #D9B865; }
+        .quick-add { position: absolute; bottom: 0; right: 0; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.1); color: var(--text-light); border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        .quick-add:hover { background: var(--gold); color: var(--nav-bg); border-color: var(--gold); }
+
+        /* --- TRUST SECTION --- */
+        .trust-section { background-color: var(--section-bg); padding: 40px 15px; border-top: 1px solid rgba(255,255,255,0.1); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 40px; align-items: center; }
+        .trust-item h4 { font-size: 14px; color: var(--text-light); margin: 0 0 8px 0; font-weight: 500; }
+        .trust-item p { font-size: 13px; color: #A0988A; margin: 0; line-height: 1.5; }
+        .find-order-form { display: flex; gap: 8px; margin-top: 10px; }
+        .find-order-input { flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 8px 12px; font-size: 12px; }
+        .btn-find { background: var(--gold); color: var(--nav-bg); border: none; padding: 8px 16px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; cursor: pointer; }
+
+        /* --- FOOTER --- */
+        .footer-section { 
+            background-color: var(--nav-bg); 
+            padding: 30px 15px; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+        .footer-logo img { height: 25px; width: auto; object-fit: contain; }
+        .footer-text { 
+            font-size: 11px; 
+            color: #7A7064; 
+            max-width: 400px; 
+            text-align: right; 
+        }
+
+        /* --- FLOWERS LAYOUT --- */
+        #flowersSpecialLayout { display: none; padding: 0 15px; margin-bottom: 40px; }
+        .flower-promo-box { border: 1px solid rgba(255,255,255,0.08); padding: 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; background: rgba(255,255,255,0.02); margin-bottom: 30px; }
+        .flower-promo-content { flex: 1; max-width: 700px; }
+        .flower-promo-title { font-family: 'Bodoni Moda', serif; font-size: 32px; color: var(--text-light); margin: 10px 0 15px 0; }
+        .flower-promo-text { color: #A0988A; font-size: 15px; line-height: 1.6; margin: 0; }
+        .flower-promo-action { flex: 0 0 auto; display: flex; justify-content: flex-end; }
+        .btn-flower-promo { background-color: var(--gold); color: var(--nav-bg); padding: 16px 32px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; font-weight: 500; display: block; text-align: center; width: 100%; max-width: 300px; transition: 0.3s; }
+        .btn-flower-promo:hover { background-color: #a98b3f; }
+        .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #9E9585; margin-bottom: 20px; }
+
+        /* =========================================
+           MOBILE FIX
+           ========================================= */
+        @media (max-width: 991px) {
+            /* NAVBAR */
+            .nav-left { display: none; } 
+            .hamburger-btn { display: block !important; } 
+            .brand-logo-container { justify-content: flex-start; flex: 0 0 auto; margin-right: auto; }
+
+            /* HERO MOBILE FIX */
+            .hero-section { 
+                text-align: left; 
+                padding-left: 20px;
+                padding-right: 20px;
+                min-height: 80vh;
+                background-position: center right;
+            }
+            .hero-section::before {
+                background: linear-gradient(90deg, rgba(15, 13, 11, 0.95) 0%, rgba(15, 13, 11, 0.8) 60%, rgba(15, 13, 11, 0.2) 100%);
+            }
+            .hero-content-wrapper { padding: 0; }
+            .hero-title { font-size: 48px; margin-bottom: 15px; }
+            .hero-text { font-size: 14px; margin-bottom: 25px; }
+
+            .btn-shop {
+                background-color: transparent;
+                border: 1px solid rgba(232, 222, 203, 0.4); 
+                color: var(--text-light);
+                width: auto;
+                text-align: center;
+                padding: 12px 20px;
+            }
+            .btn-shop:hover { border-color: var(--gold); color: var(--gold); }
+
+            /* CATEGORY SECTION */
+            .category-title { font-size: 24px; }
+            .row { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; gap: 10px; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+            .row::-webkit-scrollbar { display: none; }
+            .row { -ms-overflow-style: none; scrollbar-width: none; }
+            .col-12 { width: 140px !important; min-width: 140px !important; flex: 0 0 140px !important; max-width: 140px !important; padding: 0 !important; }
+            .card-image-wrapper { aspect-ratio: 1/1; } 
+            .placeholder-icon { font-size: 50px; }
+            .card-footer-info { flex-direction: row; justify-content: space-between; align-items: center; padding-top: 8px; margin-top: 8px; }
+            .cat-name { font-size: 9px; letter-spacing: 0.5px; } 
+            .cat-count { font-size: 8px; }
+
+            /* SLIDER MOBILE */
+            .slide { flex-direction: column; padding: 20px; gap: 20px; min-height: auto; text-align: center; }
+            .slide-art { flex: 0 0 150px; width: 150px; height: 190px; }
+            .slide-art svg { width: 80px; height: 100px; }
+            .slide-info .cc-name { font-size: 22px; }
+            .slide-info .cc-desc { font-size: 13px; margin: 0 auto 15px auto; }
+
+            /* MOBILE FILTER BAR LAYOUT */
+            .filter-bar { flex-direction: column; align-items: stretch; gap: 15px; }
+            .filter-chips { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 5px; -webkit-overflow-scrolling: touch; width: 100%; }
+            .filter-chips::-webkit-scrollbar { display: none; }
+            
+            .filter-actions { margin-left: 0; justify-content: space-between; width: 100%; }
+            .btn-toggle-filters { display: flex; }
+            .sort-wrapper { flex: 1; justify-content: flex-end; }
+            .sort-select { width: 100%; max-width: 200px; font-size: 10px; padding: 8px 30px 8px 10px; }
+
+            /* ITAGO ANG MGA SUB-FILTERS SA MOBILE */
+            .sub-filter-bar { display: none !important; padding: 15px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); flex-direction: column; gap: 15px; }
+            .sub-filter-bar.show-mobile { display: flex !important; }
+            
+            .sub-filter-row { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+            .sub-filter-label { width: 100%; margin-bottom: 5px; font-size: 9px; }
+            
+            .sub-filter-row .filter-chips { flex-wrap: nowrap !important; overflow-x: auto; width: 100%; gap: 8px; }
+            .sub-chip { padding: 8px 12px; font-size: 10px; flex-shrink: 0; }
+
+            /* SHOP GRID */
+            .shop-title { font-size: 32px; }
+            .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 15px 10px; }
+
+            /* PRODUCT CARDS MOBILE */
+            .product-art svg { width: 60px; height: 75px; }
+            .product-name { font-size: 11px; }
+            .product-price { font-size: 12px; }
+            .product-meta { font-size: 9px; }
+            .quick-add { width: 28px; height: 28px; font-size: 16px; }
+            .product-info { min-height: 70px; }
+            .product-name { min-height: 30px; }
+
+            /* SEARCH INPUT */
+            .search-input { max-width: 100%; font-size: 11px; }
+
+            /* GIFT STUDIO MOBILE FIX */
+            .studio-box { flex-direction: column; text-align: center; padding: 30px 20px; gap: 20px; }
+            .studio-action { justify-content: center; width: 100%; }
+            .btn-studio { max-width: 100%; width: 100%; }
+
+            /* FLOWERS PROMO BOX MOBILE FIX */
+            .flower-promo-box { flex-direction: column; text-align: center; padding: 30px 20px; }
+            .flower-promo-content { margin-bottom: 15px; }
+            .flower-promo-action { justify-content: center; width: 100%; }
+            .btn-flower-promo { max-width: 100%; width: 100%; }
+
+            /* TRUST SECTION */
+            .trust-section { grid-template-columns: 1fr; gap: 20px; text-align: center; padding: 30px 15px; }
+
+            /* FOOTER */
+            .footer-section { flex-direction: column; text-align: center; }
+            .footer-text { text-align: center; }
+        }
+
+        /* --- CART DRAWER STYLES --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px; 
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: #1A1614;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.4s ease-in-out;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+            color: #E8DECB;
+        }
+        .cart-drawer.open {
+            right: 0; 
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #3D3733;
+        }
+        .cart-header h3 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 24px;
+            font-weight: normal;
+            margin: 0;
+        }
+        .cart-header .close-btn {
+            background: none;
+            border: none;
+            color: #E8DECB;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #3D3733;
+            background: #1A1614;
+        }
+        .cart-subtotal-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .cart-note {
+            font-size: 11px;
+            color: #A0988A;
+            margin-bottom: 15px;
+        }
+        .cart-checkout-btn {
+            width: 100%;
+            background: var(--gold);
+            color: #191613;
+            border: none;
+            padding: 15px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cart-checkout-btn:hover { background: #a98b3f; }
+        
+        /* --- TOAST NOTIFICATION --- */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--nav-bg);
+            color: var(--text-light);
+            border: 1px solid var(--gold);
+            padding: 15px 25px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast-icon {
+            color: var(--gold);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">Pay with GCash or Maribank &nbsp;·&nbsp; Shipped with J&T Express</div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a class="nav-link" href="index.html">Shop</a>
+                <a class="nav-link" href="#">Alborá Men</a>
+                <a class="nav-link" href="#">Help</a>
+            </div>
+            <div class="brand-logo-container">
+                <a href="index.html"><img src="logo.png" alt="ALBORÁ" class="brand-logo-img"></a>
+            </div>
+            <div class="nav-right">
+                <a href="login.html" class="nav-link" style="margin-right: 15px;">Account</a>
+                <a href="#" class="bag-btn">BAG <span class="bag-badge">0</span></a>
+                <button class="hamburger-btn" onclick="toggleMenu()"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">Shop</a>
+            <a href="#">Alborá Men</a>
+            <a href="#">Help</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content-wrapper">
+            <div class="content-box">
+                <div class="eyebrow-wrapper">
+                    <span class="eyebrow">THE ART OF GIVING</span>
+                    <div class="eyebrow-line"></div>
+                </div>
+                <h1 class="hero-title">Small luxuries,<br><em>beautifully</em><br>given.</h1>
+                <p class="hero-text">Discover thoughtfully selected pieces for life's special moments.</p>
+                <a href="#collection" class="btn-shop">
+                    EXPLORE ALBORÁ <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section">
+        <div class="container-fluid px-2">
+            <div class="category-header">
+                <span class="eyebrow-dark">SHOP BY CATEGORY</span>
+                <h2 class="category-title">Find your Alborá</h2>
+            </div>
+            <div class="row g-2">
+                <div class="col-12 col-md-4 col-lg">
+                    <div class="category-card">
+                        <div class="card-image-wrapper"><i class="bi bi-gem placeholder-icon"></i></div>
+                        <div class="card-footer-info"><span class="cat-name">JEWELRY</span><span class="cat-count">6 items</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg">
+                    <div class="category-card">
+                        <div class="card-image-wrapper"><i class="bi bi-eyeglasses placeholder-icon"></i></div>
+                        <div class="card-footer-info"><span class="cat-name">ACCESSORIES</span><span class="cat-count">3 items</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg">
+                    <div class="category-card">
+                        <div class="card-image-wrapper"><i class="bi bi-droplet placeholder-icon"></i></div>
+                        <div class="card-footer-info"><span class="cat-name">PERFUME</span><span class="cat-count">6 items</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg">
+                    <div class="category-card">
+                        <div class="card-image-wrapper"><i class="bi bi-flower1 placeholder-icon"></i></div>
+                        <div class="card-footer-info"><span class="cat-name">FLOWERS</span><span class="cat-count">5 items</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg">
+                    <div class="category-card">
+                        <div class="card-image-wrapper"><i class="bi bi-brush placeholder-icon"></i></div>
+                        <div class="card-footer-info"><span class="cat-name">COSMETICS</span><span class="cat-count">6 items</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gift-studio-section">
+        <div class="studio-box">
+            <div class="studio-content">
+                <span class="eyebrow-dark">PERFUME · JEWELRY · COSMETICS · ACCESSORIES</span>
+                <h2 class="studio-title">Alborá Gift Studio</h2>
+                <p class="studio-text">Choose a gift bag or box, drag in your favorite pieces, add a dry flower letter and watch your gift set come together.</p>
+            </div>
+            <div class="studio-action"><a href="gift-studio.html" class="btn-studio">CREATE YOUR GIFT SET</a></div>
+        </div>
+    </section>
+
+    <section class="category-section" id="bestsellers" style="padding-top: 20px;">
+        <div class="category-header" style="padding-left: 15px; padding-right: 15px;">
+            <span class="eyebrow-dark">BEST SELLERS</span>
+            <h2 class="category-title">Most Loved by Alborá</h2>
+        </div>
+        <div class="container-fluid px-2">
+            <div class="slider-wrapper">
+                <div class="slider-container" id="slider">
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Jewelry</span><h3 class="cc-name">Aurelia Pendant Necklace</h3><p class="cc-desc">A 18k gold-plated pendant on a fine chain, finished with a polished cubic zirconia.</p><div class="cc-price">₱4,290</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><rect x="30" y="70" width="40" height="40" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Perfume</span><h3 class="cc-name">Alborá No. 1 Eau de Parfum</h3><p class="cc-desc">Our signature scent: bergamot, white tea and amber. Long lasting, 18% fragrance oil.</p><div class="cc-price">From ₱70</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Cosmetics</span><h3 class="cc-name">Velvet Matte Lipstick</h3><p class="cc-desc">A soft-focus velvet matte finish with a creamy feel. Choose your shade.</p><div class="cc-price">₱990</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Flowers</span><h3 class="cc-name">Sunlit Peony Bouquet</h3><p class="cc-desc">Seasonal peonies and garden roses, hand-tied and wrapped in brown paper.</p><div class="cc-price">₱2,490</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><circle cx="40" cy="50" r="15" fill="#C5A253" opacity="0.8"/><circle cx="60" cy="50" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Accessories</span><h3 class="cc-name">Luna Oversized Sunglasses</h3><p class="cc-desc">Oversized acetate frames with UV400 lenses and a protective case.</p><div class="cc-price">₱1,590</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><rect x="35" y="40" width="30" height="60" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Jewelry</span><h3 class="cc-name">Marco Curb Chain</h3><p class="cc-desc">A weighty curb chain in 18k gold-plated stainless steel. Tarnish-resistant.</p><div class="cc-price">₱2,490</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><rect x="20" y="50" width="60" height="30" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Perfume</span><h3 class="cc-name">Fleur Blanche EDP</h3><p class="cc-desc">White jasmine and ripe pear over a warm vanilla base. Bright and elegant.</p><div class="cc-price">From ₱70</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="60" r="20" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Cosmetics</span><h3 class="cc-name">Silk Glow Highlighter</h3><p class="cc-desc">A finely milled powder highlighter that gives a smooth, natural glow.</p><div class="cc-price">₱1,490</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><rect x="45" y="30" width="10" height="70" fill="#C5A253" opacity="0.8"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Jewelry</span><h3 class="cc-name">Éclat Signet Ring</h3><p class="cc-desc">A polished gold-plated signet ring with a smooth oval face.</p><div class="cc-price">₱1,590</div></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="35" fill="#C5A253" opacity="0.4"/></svg></div>
+                        <div class="slide-info"><span class="cc-cat">Accessories</span><h3 class="cc-name">Dawn Silk Hair Scarf</h3><p class="cc-desc">Lightweight silk twill, 70 × 70 cm. Wear it in the hair, at the neck, or tied to a bag.</p><div class="cc-price">₱890</div></div>
+                    </div>
+                </div>
+                <div class="slider-dots" id="dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="shop-section" id="collection">
+        <div class="shop-header">
+            <span class="eyebrow-dark">SHOP</span>
+            <h2 class="shop-title">The Collection</h2>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-chips" id="mainFilters">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="jewelry">Jewelry</button>
+                <button class="chip" data-filter="accessories">Accessories</button>
+                <button class="chip" data-filter="perfume">Perfume</button>
+                <button class="chip" data-filter="flowers">Flowers</button>
+                <button class="chip" data-filter="cosmetics">Cosmetics</button>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="btn-toggle-filters" id="toggleFiltersBtn" onclick="toggleMobileFilters()">
+                    FILTERS
+                </button>
+                <div class="sort-wrapper">
+                    <span class="sub-filter-label d-none d-md-block" style="width: auto; margin: 0;">SORT</span>
+                    <select class="sort-select">
+                        <option>Best selling</option>
+                        <option>Newest</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-bar" id="jewelrySubFilters">
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">SHOP FOR</span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-shopfor="all-shop">ALL</button>
+                    <button class="sub-chip" data-shopfor="women">WOMEN</button>
+                    <button class="sub-chip" data-shopfor="men">MEN</button>
+                    <button class="sub-chip" data-shopfor="unisex">UNISEX</button>
+                </div>
+            </div>
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">JEWELRY TYPE</span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-type="all-types">ALL</button>
+                    <button class="sub-chip" data-type="earrings">EARRINGS</button>
+                    <button class="sub-chip" data-type="necklace">NECKLACE</button>
+                    <button class="sub-chip" data-type="pendants">PENDANTS</button>
+                    <button class="sub-chip" data-type="bracelet">BRACELET</button>
+                    <button class="sub-chip" data-type="ring">RING</button>
+                    <button class="sub-chip" data-type="body-piercing">BODY PIERCING</button>
+                    <button class="sub-chip" data-type="waist-necklace">WAIST NECKLACE</button>
+                    <button class="sub-chip" data-type="anklet">ANKLET</button>
+                    <button class="sub-chip" data-type="armlet">ARMLET</button>
+                    <button class="sub-chip" data-type="crown">CROWN</button>
+                    <button class="sub-chip" data-type="jewelry-set">JEWELRY SET</button>
+                </div>
+            </div>
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">METAL</span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-metal="all-metals">ALL</button>
+                    <button class="sub-chip" data-metal="gold">GOLD</button>
+                    <button class="sub-chip" data-metal="silver">SILVER</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-bar" id="accessoriesSubFilters">
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">ACCESSORY COLLECTIONS</span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-acc="all-acc">All</button>
+                    <button class="sub-chip" data-acc="hair-clamp">Hair Clamp</button>
+                    <button class="sub-chip" data-acc="hair-clip">Hair Clip</button>
+                    <button class="sub-chip" data-acc="hair-tie">Hair Tie</button>
+                    <button class="sub-chip" data-acc="headband">Headband</button>
+                    <button class="sub-chip" data-acc="hair-extensions">Hair Extensions</button>
+                    <button class="sub-chip" data-acc="hair-net">Hair Net</button>
+                    <button class="sub-chip" data-acc="fake-nails">Fake Nails</button>
+                    <button class="sub-chip" data-acc="keychains">Keychains</button>
+                    <button class="sub-chip" data-acc="rhinestone-sticker">Rhinestone Sticker</button>
+                    <button class="sub-chip" data-acc="sunglasses">Sunglasses</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-bar" id="perfumeSubFilters">
+            <input type="text" class="search-input" placeholder="Search a scent, e.g. amber, jasmine, vanilla">
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">SHOP FOR</span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-shopfor="all-shop">All</button>
+                    <button class="sub-chip" data-shopfor="women">Women</button>
+                    <button class="sub-chip" data-shopfor="men">Men</button>
+                    <button class="sub-chip" data-shopfor="unisex">Unisex</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-filter-bar" id="cosmeticsSubFilters">
+            <div class="sub-filter-row">
+                <span class="sub-filter-label">COSMETIC COLLECTIONS </span>
+                <div class="filter-chips">
+                    <button class="sub-chip active" data-cos="all-cos">All</button>
+                    <button class="sub-chip" data-cos="velvet-matte">Velvet Matte</button>
+                    <button class="sub-chip" data-cos="tinted-glossy">Tinted Glossy</button>
+                    <button class="sub-chip" data-cos="lip-cheek-tint">Lip & Cheek Tint</button>
+                    <button class="sub-chip" data-cos="hd-nude-matte">HD Nude Matte Tint</button>
+                    <button class="sub-chip" data-cos="magic-lip-serum">Magic Lip Serum</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="flowersSpecialLayout">
+            <div class="flower-promo-box">
+                <div class="flower-promo-content">
+                    <span class="eyebrow-dark">FLOWERS</span>
+                    <h2 class="flower-promo-title">Alborá Bouquet Studio</h2>
+                    <p class="flower-promo-text">Pick your blooms, add a perfume, lip tint or jewelry, choose your wrap and ribbon, and watch your gift take shape.</p>
+                </div>
+                <div class="flower-promo-action"><a href="bouquet-studio.html" class="btn-flower-promo">BUILD YOUR BOUQUET</a></div>
+            </div>
+            <div class="section-label">READY-MADE BOUQUETS · AVAILABLE NOW</div>
+        </div>
+
+        <div class="shop-grid" id="productGrid">
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="women">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="30" y="70" width="40" height="40" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Rosée Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.7 · 3.4k sold</span><span class="stock-good">105 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="hair-clamp">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="40" cy="50" r="15" fill="#C5A253" opacity="0.8"/><circle cx="60" cy="50" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Perle Hair Claw Clamp</h4><div class="product-price">₱390</div><div class="product-meta"><span>★ 4.8 · 2.9k sold</span><span class="stock-good">120 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="hair-tie">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="35" fill="#C5A253" opacity="0.4"/></svg></div>
+                <span class="sale-pill">-25%</span>
+                <div class="product-info"><h4 class="product-name">Dawn Silk Hair Scarf</h4><div class="product-price">₱890 <s>₱1,190</s></div><div class="product-meta"><span>★ 4.9 · 2.3k sold</span><span class="stock-good">24 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="women" data-type="earrings" data-metal="gold">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Solène Pearl Drop Earrings</h4><div class="product-price">₱1,890</div><div class="product-meta"><span>★ 4.8 · 2.1k sold</span><span class="stock-good">30 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="women">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="30" y="70" width="40" height="40" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Fleur Blanche Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.9 · 1.9k sold</span><span class="stock-good">84 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="unisex">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="30" y="70" width="40" height="40" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Alborá No. 1 Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.9 · 1.6k sold</span><span class="stock-good">90 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="sunglasses">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="40" cy="50" r="15" fill="#C5A253" opacity="0.8"/><circle cx="60" cy="50" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Luna Oversized Sunglasses</h4><div class="product-price">₱1,590</div><div class="product-meta"><span>★ 4.6 · 1.3k sold</span><span class="stock-good">24 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="men">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="35" y="45" width="30" height="40" rx="4" fill="#E8DECB" opacity="0.8"/><rect x="42" y="30" width="16" height="15" fill="#E8DECB" opacity="0.6"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Noir Ambré Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.8 · 1.2k sold</span><span class="stock-good">66 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="women" data-type="necklace" data-metal="gold">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" stroke="#E8DECB" stroke-width="6" fill="none" opacity="0.8"/><path d="M50 20 L60 35 L50 50 L40 35 Z" fill="#E8DECB" opacity="0.9"/></svg></div>
+                <span class="sale-pill">-17%</span>
+                <div class="product-info"><h4 class="product-name">Marco Curb Chain Necklace</h4><div class="product-price">₱2,490 <s>₱2,990</s></div><div class="product-meta"><span>★ 4.8 · 1.2k sold</span><span class="stock-warn">9 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="men" data-type="necklace" data-metal="gold">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" fill="#C5A253" opacity="0.8"/></svg></div>
+                <span class="sale-pill">-18%</span>
+                <div class="product-info"><h4 class="product-name">Aurelia Pendant Necklace</h4><div class="product-price">₱4,290 <s>₱5,200</s></div><div class="product-meta"><span>★ 4.9 · 980 sold</span><span class="stock-good">36 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="unisex" data-type="bracelet" data-metal="silver">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" stroke="#E8DECB" stroke-width="6" fill="none" opacity="0.8"/><path d="M50 20 L60 35 L50 50 L40 35 Z" fill="#E8DECB" opacity="0.9"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Orion Link Bracelet</h4><div class="product-price">₱1,790</div><div class="product-meta"><span>★ 4.8 · 940 sold</span><span class="stock-good">11 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="men">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="35" y="45" width="30" height="40" rx="4" fill="#E8DECB" opacity="0.8"/><rect x="42" y="30" width="16" height="15" fill="#E8DECB" opacity="0.6"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Vétiver Gold Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.7 · 930 sold</span><span class="stock-good">54 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="perfume" data-shopfor="unisex">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="35" y="45" width="30" height="40" rx="4" fill="#E8DECB" opacity="0.8"/><rect x="42" y="30" width="16" height="15" fill="#E8DECB" opacity="0.6"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Santal Mint Eau de Parfum</h4><div class="product-price">From ₱70</div><div class="product-meta"><span>★ 4.8 · 820 sold</span><span class="stock-good">75 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="women" data-type="ring" data-metal="gold">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="45" y="30" width="10" height="70" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Éclat Signet Ring</h4><div class="product-price">₱1,590</div><div class="product-meta"><span>★ 4.8 · 760 sold</span><span class="stock-good">32 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="men" data-type="ring" data-metal="silver">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" stroke="#E8DECB" stroke-width="6" fill="none" opacity="0.8"/><path d="M50 20 L60 35 L50 50 L40 35 Z" fill="#E8DECB" opacity="0.9"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Lucan Signet Ring</h4><div class="product-price">₱1,990</div><div class="product-meta"><span>★ 4.7 · 710 sold</span><span class="stock-good">22 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="flowers">
+                <div class="product-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Eternal Rose</h4><div class="product-price">₱1,490</div><div class="product-meta"><span>★ 4.9 · 1.8k sold</span><span class="stock-good">15 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="flowers">
+                <div class="product-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <span class="sale-pill">-13%</span>
+                <div class="product-info"><h4 class="product-name">Spring Tulip Mix</h4><div class="product-price">₱1,290 <s>₱1,490</s></div><div class="product-meta"><span>★ 4.8 · 1.2k sold</span><span class="stock-good">24 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="flowers">
+                <div class="product-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <span class="new-pill">NEW</span>
+                <div class="product-info"><h4 class="product-name">Blush Peony Box</h4><div class="product-price">₱2,890</div><div class="product-meta"><span>★ 5.0 · 450 sold</span><span class="stock-warn">5 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="flowers">
+                <div class="product-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <span class="new-pill">NEW</span>
+                <div class="product-info"><h4 class="product-name">Sunflower Serenade</h4><div class="product-price">₱1,890</div><div class="product-meta"><span>★ 4.8 · 800 sold</span><span class="stock-good">18 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="velvet-matte">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Velvet Matte Lipstick</h4><div class="product-price">₱990</div><div class="product-meta"><span>★ 4.8 · 4.2k sold</span><span class="stock-good">30 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="lip-cheek-tint">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Lip & Cheek Tint</h4><div class="product-price">₱590</div><div class="product-meta"><span>★ 4.8 · 3.1k sold</span><span class="stock-good">39 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="tinted-glossy">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Tinted Glossy Lip Oil</h4><div class="product-price">₱690</div><div class="product-meta"><span>★ 4.7 · 2.8k sold</span><span class="stock-good">45 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="hd-nude-matte">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">HD Nude Matte Tint</h4><div class="product-price">₱790</div><div class="product-meta"><span>★ 4.8 · 2.5k sold</span><span class="stock-good">28 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="magic-lip-serum">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Magic Lip Serum</h4><div class="product-price">₱890</div><div class="product-meta"><span>★ 4.9 · 2.2k sold</span><span class="stock-warn">7 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="cosmetics" data-cos="velvet-matte">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg></div>
+                <span class="new-pill">NEW</span>
+                <div class="product-info"><h4 class="product-name">Velvet Matte Lip Tint</h4><div class="product-price">₱850</div><div class="product-meta"><span>★ 4.9 · 1.9k sold</span><span class="stock-good">33 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="women" data-type="anklet" data-metal="gold">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" stroke="#E8DECB" stroke-width="6" fill="none" opacity="0.8"/><path d="M50 20 L60 35 L50 50 L40 35 Z" fill="#E8DECB" opacity="0.9"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Aria Gold Anklet</h4><div class="product-price">₱990</div><div class="product-meta"><span>★ 4.7 · 680 sold</span><span class="stock-good">19 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="women" data-type="pendants" data-metal="silver">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="30" stroke="#E8DECB" stroke-width="6" fill="none" opacity="0.8"/><path d="M50 20 L60 35 L50 50 L40 35 Z" fill="#E8DECB" opacity="0.9"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Céleste Moon Pendant</h4><div class="product-price">₱1,690</div><div class="product-meta"><span>★ 4.8 · 620 sold</span><span class="stock-good">26 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="jewelry" data-shopfor="unisex" data-type="body-piercing" data-metal="silver">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="40" cy="50" r="15" fill="#C5A253" opacity="0.8"/><circle cx="60" cy="50" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Nova Piercing Stud Set</h4><div class="product-price">₱590</div><div class="product-meta"><span>★ 4.6 · 580 sold</span><span class="stock-good">42 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="hair-clip">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="40" cy="50" r="15" fill="#C5A253" opacity="0.8"/><circle cx="60" cy="50" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Étoile Pearl Hair Clip</h4><div class="product-price">₱290</div><div class="product-meta"><span>★ 4.7 · 1.5k sold</span><span class="stock-good">60 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="keychains">
+                <div class="product-art"><svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="35" fill="#C5A253" opacity="0.4"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Alborá Gold Keychain</h4><div class="product-price">₱350</div><div class="product-meta"><span>★ 4.8 · 1.1k sold</span><span class="stock-good">48 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="fake-nails">
+                <div class="product-art"><svg viewBox="0 0 100 125"><rect x="45" y="30" width="10" height="70" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Chrome Press-On Nails</h4><div class="product-price">₱450</div><div class="product-meta"><span>★ 4.7 · 980 sold</span><span class="stock-good">35 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+            <a href="#" class="product-card" data-category="accessories" data-acc="headband">
+                <div class="product-art"><svg viewBox="0 0 100 125"><path d="M50 100V50" stroke="#C5A253" stroke-width="4"/><circle cx="50" cy="45" r="15" fill="#C5A253" opacity="0.8"/></svg></div>
+                <div class="product-info"><h4 class="product-name">Satin Pearl Headband</h4><div class="product-price">₱390</div><div class="product-meta"><span>★ 4.8 · 870 sold</span><span class="stock-good">52 in stock</span></div><button class="quick-add">+</button></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ TRUST SECTION ============ -->
+    <section class="trust-section">
+        <div class="trust-item">
+            <h4>Free Shipping</h4>
+            <p>On all orders over ₱2,000. Shipped with J&T Express nationwide.</p>
+        </div>
+        <div class="trust-item">
+            <h4>Gift Ready</h4>
+            <p>Every order arrives in our signature box with a handwritten note.</p>
+        </div>
+        <div class="trust-item">
+            <h4>Find Your Order</h4>
+            <p>Track your parcel anytime.</p>
+            <form class="find-order-form" onsubmit="return false;">
+                <input type="text" class="find-order-input" placeholder="Order number">
+                <button type="submit" class="btn-find">Track</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer-section">
+        <div class="footer-logo">
+            <img src="logo.png" alt="ALBORÁ">
+        </div>
+        <div class="footer-text">
+            © 2025 Alborá. Small luxuries, beautifully given. Made with care in the Philippines.
+        </div>
+    </footer>
+
+    <!-- CART DRAWER OVERLAY -->
+    <div id="cartOverlay" class="cart-overlay"></div>
+    
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="toast-notification">
+        <i class="bi bi-check-circle-fill toast-icon"></i>
+        <span id="toastMessage">Added to cart!</span>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your bag</h3>
+            <button class="close-btn" onclick="closeCart()">✖</button>
+        </div>
+        
+        <div class="cart-body" id="cartItemsContainer">
+            <!-- Lalabas dito yung items -->
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-subtotal-row">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">₱0</span>
+            </div>
+            <p class="cart-note">The J&T shipping fee is added after your payment is verified.</p>
+            <button class="cart-checkout-btn" onclick="proceedToCheckout()">CHECKOUT</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        /* ---------- CART SYSTEM (SIDE DRAWER) ---------- */
+        let cart = JSON.parse(localStorage.getItem('alboraCart')) || [];
+
+        function openCart() {
+            document.getElementById('cartDrawer').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('active');
+            renderCartItems();
+        }
+
+        function closeCart() {
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('active');
+        }
+
+        function saveCart() {
+            localStorage.setItem('alboraCart', JSON.stringify(cart));
+            updateBagBadge();
+        }
+
+        function updateBagBadge() {
+            const badge = document.querySelector('.bag-badge');
+            if (badge) {
+                let totalQty = 0;
+                cart.forEach(item => {
+                    let qty = parseInt(item.qty);
+                    if (!isNaN(qty)) totalQty += qty;
+                });
+                badge.textContent = totalQty;
+            }
+        }
+
+        function addToCart(productName, price, category, imageSvg) {
+            let safePrice = parseFloat(price);
+            if (isNaN(safePrice)) safePrice = 0; 
+
+            const existing = cart.find(item => item.name === productName);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ 
+                    name: productName, 
+                    price: safePrice,
+                    category: category, 
+                    image: imageSvg, 
+                    qty: 1 
+                });
+            }
+            saveCart();
+            showToast(productName);
+        }
+
+        let toastTimeout;
+        function showToast(productName) {
+            const toast = document.getElementById('toastNotification');
+            const msg = document.getElementById('toastMessage');
+            if(!toast || !msg) return;
+            msg.textContent = `"${productName}" added to bag!`;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            if (!container || !subtotalEl) return;
+
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; padding: 20px;">Your bag is empty.</p>';
+                subtotalEl.textContent = '₱0';
+                return;
+            }
+
+            cart.forEach((item, index) => {
+               subtotal += (Number(item.price) || 0) * (Number(item.qty) || 1);
+                
+                container.innerHTML += `
+                    <div class="cart-item" style="display:flex; gap:15px; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
+                        <div style="width:60px; height:75px; background:#3D3620; display:flex; align-items:center; justify-content:center;">
+                            ${item.image || ''}
+                        </div>
+                        <div style="flex:1;">
+                            <h4 style="font-size:14px; margin:0 0 5px 0; color:var(--text-light);">${item.name}</h4>
+                            <p style="font-size:12px; color:#A0988A; margin:0 0 10px 0;">${item.category}</p>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <button onclick="changeQty(${index}, -1)" style="background:transparent; border:1px solid #555; color:white; width:24px; height:24px; cursor:pointer;">−</button>
+                                <span style="font-size:14px; color:white;">${item.qty}</span>
+                                <button onclick="changeQty(${index}, 1)" style="background:transparent; border:1px solid #555; color:white; width:24px; height:24px; cursor:pointer;">+</button>
+                            </div>
+                            <button onclick="removeItem(${index})" style="background:none; border:none; color:#888; font-size:11px; text-decoration:underline; cursor:pointer; padding:0; margin-top:10px;">Remove</button>
+                        </div>
+                        <div style="font-weight:500; color:var(--gold);">₱${(item.price * item.qty).toLocaleString()}</div>
+                    </div>
+                `;
+            });
+
+            subtotalEl.textContent = '₱' + subtotal.toLocaleString();
+        }
+
+        function changeQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            saveCart();
+            renderCartItems();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCartItems();
+        }
+
+        // --- QUICK ADD LOGIC (GATEKEEPER) ---
+        document.querySelectorAll('.product-card').forEach(card => {
+            const btn = card.querySelector('.quick-add');
+            if (!btn) return;
+
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let currentUser = localStorage.getItem('alboraUser');
+                if (!currentUser) {
+                    window.location.href = 'login.html?redirect=home';
+                    return; 
+                }
+
+                const name = card.querySelector('.product-name').textContent.trim();
+                const priceText = card.querySelector('.product-price').textContent;
+                const priceMatch = priceText.match(/[\d,]+/);
+                const price = priceMatch ? parseInt(priceMatch[0].replace(/,/g, '')) : 0;
+                const category = card.dataset.category || 'general';
+                const svg = card.querySelector('.product-art svg')?.outerHTML || '';
+
+                addToCart(name, price, category, svg);
+            });
+        });
+
+        // --- CHECKOUT GATEKEEPER ---
+        function proceedToCheckout() {
+            let cart = JSON.parse(localStorage.getItem('alboraCart')) || [];
+            if (cart.length === 0) {
+                alert("Your bag is empty!");
+                return;
+            }
+
+            let currentUser = localStorage.getItem('alboraUser');
+            if (!currentUser) {
+                window.location.href = 'login.html?redirect=checkout';
+                return;
+            }
+
+            window.location.href = 'checkout.html';
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const bagBtn = document.querySelector('.bag-btn');
+            if (bagBtn) {
+                bagBtn.onclick = function (e){
+                    e.preventDefault();
+                    openCart();
+                };
+            }
+
+            const overlay = document.getElementById('cartOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', closeCart);
+            }
+
+            updateBagBadge();
+            renderCartItems();
+        });
+
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        function toggleMobileFilters() {
+            const btn = document.getElementById('toggleFiltersBtn');
+            if(btn) btn.classList.toggle('open');
+            const activeCat = document.querySelector('#mainFilters .chip.active')?.dataset.filter || 'all';
+            const bar = getSubFilterBar(activeCat);
+            if (bar) bar.classList.toggle('show-mobile');
+        }
+
+        function getSubFilterBar(category) {
+            switch (category) {
+                case 'jewelry': return document.getElementById('jewelrySubFilters');
+                case 'accessories': return document.getElementById('accessoriesSubFilters');
+                case 'perfume': return document.getElementById('perfumeSubFilters');
+                case 'cosmetics': return document.getElementById('cosmeticsSubFilters');
+                default: return null;
+            }
+        }
+
+        const mainChips = document.querySelectorAll('#mainFilters .chip');
+        const productCards = document.querySelectorAll('#productGrid .product-card');
+        const flowersLayout = document.getElementById('flowersSpecialLayout');
+        const subFilterBars = document.querySelectorAll('.sub-filter-bar');
+
+        let currentCategory = 'all';
+        let currentShopFor = 'all-shop';
+        let currentType = 'all-types';
+        let currentMetal = 'all-metals';
+        let currentAcc = 'all-acc';
+        let currentCos = 'all-cos';
+
+        mainChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                mainChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentCategory = chip.dataset.filter;
+                resetSubFilters();
+                updateVisibility();
+                updateSubFilterBars();
+            });
+        });
+
+        function resetSubFilters() {
+            currentShopFor = 'all-shop';
+            currentType = 'all-types';
+            currentMetal = 'all-metals';
+            currentAcc = 'all-acc';
+            currentCos = 'all-cos';
+            document.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.sub-chip[data-shopfor="all-shop"], .sub-chip[data-type="all-types"], .sub-chip[data-metal="all-metals"], .sub-chip[data-acc="all-acc"], .sub-chip[data-cos="all-cos"]').forEach(c => c.classList.add('active'));
+        }
+
+        function updateSubFilterBars() {
+            subFilterBars.forEach(bar => {
+                bar.classList.remove('visible');
+                bar.classList.remove('show-mobile');
+            });
+            const bar = getSubFilterBar(currentCategory);
+            if (bar) bar.classList.add('visible');
+        }
+
+        document.querySelectorAll('.sub-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const row = chip.closest('.filter-chips');
+                row.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+
+                if (chip.dataset.shopfor) currentShopFor = chip.dataset.shopfor;
+                if (chip.dataset.type) currentType = chip.dataset.type;
+                if (chip.dataset.metal) currentMetal = chip.dataset.metal;
+                if (chip.dataset.acc) currentAcc = chip.dataset.acc;
+                if (chip.dataset.cos) currentCos = chip.dataset.cos;
+
+                updateVisibility();
+            });
+        });
+
+        function updateVisibility() {
+            productCards.forEach(card => {
+                const cat = card.dataset.category;
+                let show = true;
+
+                if (currentCategory !== 'all' && cat !== currentCategory) show = false;
+
+                if (show && currentCategory === 'jewelry') {
+                    if (currentShopFor !== 'all-shop' && card.dataset.shopfor !== currentShopFor) show = false;
+                    if (currentType !== 'all-types' && card.dataset.type !== currentType) show = false;
+                    if (currentMetal !== 'all-metals' && card.dataset.metal !== currentMetal) show = false;
+                }
+                if (show && currentCategory === 'accessories') {
+                    if (currentAcc !== 'all-acc' && card.dataset.acc !== currentAcc) show = false;
+                }
+                if (show && currentCategory === 'perfume') {
+                    if (currentShopFor !== 'all-shop' && card.dataset.shopfor !== currentShopFor) show = false;
+                }
+                if (show && currentCategory === 'cosmetics') {
+                    if (currentCos !== 'all-cos' && card.dataset.cos !== currentCos) show = false;
+                }
+
+                card.style.display = show ? '' : 'none';
+            });
+
+            if (flowersLayout) {
+                flowersLayout.style.display = (currentCategory === 'flowers') ? 'block' : 'none';
+            }
+        }
+
+        const slider = document.getElementById('slider');
+        const slides = slider ? slider.querySelectorAll('.slide') : [];
+        const dotsContainer = document.getElementById('dots');
+        let currentSlide = 0;
+        let autoSlideInterval;
+
+        if (dotsContainer && slides.length > 0) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = dotsContainer.querySelectorAll('.dot');
+
+            window.goToSlide = function(index) {
+                currentSlide = index;
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+                resetAutoSlide();
+            }
+
+            window.nextSlide = function() {
+                goToSlide((currentSlide + 1) % slides.length);
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+
+            resetAutoSlide();
+        }
+
+        updateVisibility();
+        updateSubFilterBars();
+    </script>
+</body>
+</html>

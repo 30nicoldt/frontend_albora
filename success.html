@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alborá - Your Order</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nav-bg: #191613;
+            --text-light: #E8DECB;
+            --gold: #C5A253;
+            --section-bg: #0F0D0B;
+            --border: #3D3733;
+            --input-bg: #1A1614;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-light);
+            font-family: 'Jost', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-family: 'Bodoni Moda', serif; font-size: 24px; font-weight: 400; }
+        .close-btn { background: none; border: none; color: var(--text-light); font-size: 24px; cursor: pointer; text-decoration: none; }
+
+        /* CONTAINER */
+        .order-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+
+        /* ORDER ID & STATUS */
+        .order-id-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #9E9585; margin-bottom: 5px; }
+        .order-id { font-family: 'Bodoni Moda', serif; font-size: 36px; color: var(--text-light); margin-bottom: 15px; }
+        .status-badge {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            color: var(--text-light);
+            padding: 6px 12px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        /* CARDS */
+        .card {
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .card h3 { font-family: 'Bodoni Moda', serif; font-size: 20px; font-weight: 400; margin-bottom: 15px; color: var(--text-light); }
+        
+        /* ORDER LINK */
+        .link-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .link-box input {
+            flex: 1;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: #A0988A;
+            padding: 10px 15px;
+            font-size: 12px;
+            outline: none;
+        }
+        .link-box button {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--text-light);
+            padding: 0 20px;
+            font-size: 11px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        /* TIMELINE (TRACKER) */
+        .timeline { list-style: none; position: relative; padding-left: 20px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 4px; top: 10px; bottom: 20px;
+            width: 1px; background: var(--border);
+        }
+        .timeline li { position: relative; margin-bottom: 25px; }
+        .timeline li::before {
+            content: ''; position: absolute; left: -20px; top: 4px;
+            width: 10px; height: 10px; border-radius: 50%;
+            border: 1px solid var(--border); background: var(--section-bg);
+        }
+        .timeline li.active::before { border-color: var(--gold); background: var(--gold); }
+        .timeline li h4 { font-size: 14px; font-weight: 500; margin-bottom: 3px; color: #A0988A; }
+        .timeline li.active h4 { color: var(--text-light); }
+        .timeline li p { font-size: 11px; color: #7A7064; }
+
+        /* ITEMS & TABLES */
+        .item-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0; font-size: 13px; }
+        .item-row:last-child { border-bottom: none; }
+        .item-name { font-weight: 500; }
+        .item-desc { font-size: 11px; color: #A0988A; margin-top: 3px; }
+        
+        .total-row { display: flex; justify-content: space-between; padding-top: 15px; margin-top: 10px; border-top: 1px solid var(--border); font-size: 15px; font-weight: 500; }
+        .total-row span:last-child { color: var(--text-light); }
+
+        /* PAYMENT INFO */
+        .info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; }
+        .info-row span:first-child { color: #A0988A; }
+        .status-text { color: var(--gold); }
+
+        /* RECEIPT PROOF IMAGE */
+        .proof-img { max-width: 200px; margin-top: 15px; border: 1px solid var(--border); border-radius: 4px; }
+
+        /* DELIVERY INFO */
+        .delivery-info p { font-size: 13px; line-height: 1.6; color: #A0988A; margin-bottom: 5px; }
+        .delivery-info strong { color: var(--text-light); font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Your order</h1>
+        <a href="home.html" class="close-btn">✖</a>
+    </div>
+
+    <div class="order-container">
+        
+        <div class="order-id-label">ORDER</div>
+        <div class="order-id" id="displayOrderId">ALB-000000</div>
+        <div class="status-badge">Product payment under review</div>
+
+        <div class="card">
+            <h3>Your order link</h3>
+            <p style="font-size: 12px; color: #A0988A; margin-bottom: 10px;">Keep this link. It opens this page, where you can pay your shipping fee and see your tracking number.</p>
+            <div class="link-box">
+                <input type="text" id="orderLinkInput" readonly>
+                <button onclick="copyLink()">COPY</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <ul class="timeline">
+                <li class="active">
+                    <h4>Product payment</h4>
+                    <p>Under review</p>
+                </li>
+                <li>
+                    <h4>J&T shipping fee</h4>
+                    <p>Added after your product payment is verified</p>
+                </li>
+                <li>
+                    <h4>Shipping payment</h4>
+                    <p>After the shipping fee is ready</p>
+                </li>
+                <li>
+                    <h4>Confirmed / Ready to Ship</h4>
+                </li>
+                <li>
+                    <h4>J&T tracking number</h4>
+                    <p>Appears here once your parcel is booked</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Items</h3>
+            <div id="displayItems"></div>
+            
+            <div class="item-row" style="color: #A0988A; border-bottom: none; padding-bottom: 5px;">
+                <span>Product subtotal</span>
+                <span id="displaySubtotal">₱0</span>
+            </div>
+            <div class="item-row" style="color: #A0988A; border-bottom: none; padding: 5px 0;">
+                <span>J&T shipping fee</span>
+                <span>To be confirmed</span>
+            </div>
+            
+            <div class="total-row">
+                <span>Total</span>
+                <span id="displayTotal">₱0 so far</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Product payment</h3>
+            <div class="info-row">
+                <span>Method</span>
+                <span id="displayMethod">GCash</span>
+            </div>
+            <div class="info-row">
+                <span>Reference no.</span>
+                <span id="displayRef">N/A</span>
+            </div>
+            <div class="info-row">
+                <span>Status</span>
+                <span class="status-text">Under review</span>
+            </div>
+            
+            <!-- Screenshot ng binayaran -->
+            <img src="https://via.placeholder.com/400x400/3D3620/C5A253?text=Payment+Proof" alt="Proof of Payment" class="proof-img">
+        </div>
+
+        <div class="card delivery-info">
+            <h3>Deliver to</h3>
+            <p><strong id="displayName">Full Name</strong></p>
+            <p id="displayAddress">Address here</p>
+            <p id="displayPhone">09XX XXX XXXX</p>
+        </div>
+
+        <div class="card">
+            <h3>Receipt</h3>
+            <p style="font-size: 13px; color: #A0988A;">Your digital receipt appears here once both payments are verified.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // DITO NATIN KINUKUHA YUNG DATA GALING CHECKOUT
+        document.addEventListener('DOMContentLoaded', () => {
+            // Kunin yung huling order na na-save
+            let orders = JSON.parse(localStorage.getItem('alboraOrders')) || [];
+            
+            if(orders.length > 0) {
+                let latestOrder = orders[orders.length - 1];
+                
+                // I-display ang Order ID
+                document.getElementById('displayOrderId').textContent = latestOrder.id;
+                
+                // I-display ang Link
+                document.getElementById('orderLinkInput').value = window.location.href;
+
+                // I-display ang Customer Info
+                document.getElementById('displayName').textContent = latestOrder.customer.name;
+                document.getElementById('displayAddress').textContent = latestOrder.customer.address;
+                document.getElementById('displayPhone').textContent = latestOrder.customer.phone;
+
+                // I-display ang Items
+                let itemsContainer = document.getElementById('displayItems');
+                let subtotal = 0;
+                
+                latestOrder.items.forEach(item => {
+                    let price = Number(item.price) || 0;
+                    let qty = Number(item.qty) || 1;
+                    subtotal += (price * qty);
+
+                    itemsContainer.innerHTML += `
+                        <div class="item-row">
+                            <div>
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-desc">${item.category} · ${qty} x ₱${price}</div>
+                            </div>
+                            <div>₱${(price * qty).toLocaleString()}</div>
+                        </div>
+                    `;
+                });
+
+                // I-display ang Totals
+                document.getElementById('displaySubtotal').textContent = '₱' + subtotal.toLocaleString();
+                document.getElementById('displayTotal').textContent = '₱' + subtotal.toLocaleString() + ' so far';
+
+                // I-display ang Payment Details
+                document.getElementById('displayMethod').textContent = latestOrder.paymentMethod;
+                document.getElementById('displayRef').textContent = latestOrder.referenceNo || 'N/A';
+            }
+        });
+
+        function copyLink() {
+            let copyText = document.getElementById("orderLinkInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(copyText.value);
+            
+            // Feedback
+            let btn = document.querySelector('.link-box button');
+            btn.textContent = "COPIED!";
+            setTimeout(() => btn.textContent = "COPY", 2000);
+        }
+    </script>
+</body>
+</html>

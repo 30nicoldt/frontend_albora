@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alborá - Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --nav-bg: #191613;
+            --text-light: #E8DECB;
+            --gold: #C5A253;
+            --section-bg: #0F0D0B;
+            --border: #3D3733;
+            --input-bg: #1A1614;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-light);
+            font-family: 'Jost', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 80px; /* Space para sa sticky footer */
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .checkout-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        /* --- LEFT COLUMN (FORM) --- */
+        .form-column {
+            flex: 1;
+        }
+        .step-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #9E9585;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-row {
+            display: flex;
+            gap: 15px;
+        }
+        .input-row .input-group {
+            flex: 1;
+        }
+        .input-label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9E9585;
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            padding: 14px 15px;
+            font-size: 13px;
+            font-family: 'Jost', sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            border-color: var(--gold);
+        }
+
+        /* PAYMENT OPTIONS */
+        .payment-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .payment-option.active {
+            border-color: var(--gold);
+            background: rgba(197, 162, 83, 0.05);
+        }
+        .payment-option input[type="radio"] {
+            accent-color: var(--gold);
+            margin-top: 4px;
+        }
+        .payment-details {
+            flex: 1;
+        }
+        .payment-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .payment-desc {
+            font-size: 12px;
+            color: #A0988A;
+        }
+
+        /* QR CODE BOX */
+        .qr-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .qr-box {
+            width: 150px;
+            height: 150px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .qr-info h3 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+        .qr-info p {
+            font-size: 12px;
+            color: #A0988A;
+            line-height: 1.6;
+        }
+
+        /* --- RIGHT COLUMN (SUMMARY) --- */
+        .summary-column {
+            width: 400px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .summary-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+        .summary-item-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .summary-img {
+            width: 50px;
+            height: 60px;
+            background: #3D3620;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .summary-info h4 {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        .summary-info p {
+            font-size: 11px;
+            color: #A0988A;
+        }
+        .summary-price {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .summary-totals {
+            margin-top: 25px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #A0988A;
+        }
+        .summary-row.total {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* --- STICKY BOTTOM BUTTON --- */
+        .sticky-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--gold);
+            color: var(--nav-bg);
+            border: none;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+        .sticky-bottom:hover {
+            background: #a98b3f;
+        }
+        .prototype-note {
+            position: fixed;
+            bottom: 5px;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #555;
+            z-index: 99;
+            pointer-events: none;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .checkout-container {
+                flex-direction: column-reverse; /* Summary sa taas, form sa baba */
+                margin: 20px auto;
+            }
+            .summary-column {
+                width: 100%;
+                position: static;
+            }
+            .header {
+                padding: 15px 20px;
+            }
+            .input-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .qr-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Checkout</h1>
+        <a href="bag.html" class="close-btn">✖</a> <!-- Babalik sa bag.html -->
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="checkout-container">
+        
+        <!-- LEFT COLUMN: FORMS -->
+        <div class="form-column">
+            <span class="step-title">STEP 1 OF 2 · PAY FOR YOUR PRODUCTS</span>
+            
+            <h2 class="section-title">Contact</h2>
+            
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="">
+            </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Mobile Number</label>
+                    <input type="tel" class="form-input" placeholder="09XX XXX XXXX">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Messenger, Instagram, Threads, X or TikTok</label>
+                    <input type="text" class="form-input" placeholder="e.g. Instagram @yourname">
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 40px;">Delivery address</h2>
+            
+            <div class="input-group">
+                <label class="input-label">House No., Street</label>
+                <input type="text" class="form-input" placeholder="">
+            </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Barangay</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">City / Municipality</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Province</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Postal Code</label>
+                    <input type="text" class="form-input" placeholder="">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Note to Rider (Optional)</label>
+                <input type="text" class="form-input" placeholder="Landmark, gate color, etc.">
+            </div>
+
+            <h2 class="section-title" style="margin-top: 40px;">Pay for your products</h2>
+
+            <!-- PAYMENT OPTION 1 -->
+            <label class="payment-option active" onclick="selectPayment('gcash', this)">
+                <input type="radio" name="payment" value="gcash" checked>
+                <div class="payment-details">
+                    <div class="payment-name">GCash</div>
+                    <div class="payment-desc">Scan the QR code, pay the exact amount, then upload your proof</div>
+                </div>
+            </label>
+
+            <!-- PAYMENT OPTION 2 -->
+            <label class="payment-option" onclick="selectPayment('maribank', this)">
+                <input type="radio" name="payment" value="maribank">
+                <div class="payment-details">
+                    <div class="payment-name">Maribank</div>
+                    <div class="payment-desc">Scan the QR code, pay the exact amount, then upload your proof</div>
+                </div>
+            </label>
+
+            <!-- QR CODE CONTAINER -->
+            <div class="qr-container">
+                <div class="qr-box" id="qrBox">
+                    Your GCash QR code goes here
+                </div>
+                <div class="qr-info">
+                    <small id="qrLabel" style="font-size:10px; text-transform:uppercase; letter-spacing:1px;">SCAN TO PAY WITH GCASH</small>
+                    <h3 id="qrTotalAmount">₱1,060</h3>
+                    <p>Open the GCash app, scan this code and pay the exact amount. Paying on your phone? Screenshot this code, then choose the screenshot from your gallery inside the app.</p>
+                </div>
+            </div>
+
+            <!-- UPLOAD PROOF -->
+            <div class="input-group" style="margin-top: 30px;">
+                <label class="input-label">Payment Reference No. (Optional)</label>
+                <input type="text" class="form-input" placeholder="From your payment receipt">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Proof of Payment (Screenshot or Photo)</label>
+                <input type="file" class="form-input" style="padding: 10px;">
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; font-size: 12px; color: #A0988A; margin-top: 20px;">
+                Shipping is not included yet. After we verify this payment, we enter your J&T Express shipping fee and message you with a link to pay it (step 2 of 2).
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: SUMMARY -->
+        <div class="summary-column">
+            <h2 class="summary-title">Order summary</h2>
+            
+            <div id="checkoutItems">
+                <!-- Items dito ilalagay ng JS -->
+            </div>
+
+            <div class="summary-totals">
+                <div class="summary-row">
+                    <span>Product subtotal</span>
+                    <span id="checkoutSubtotal">₱0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping (J&T Express)</span>
+                    <span>Added later</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Pay now</span>
+                    <span id="checkoutTotal">₱0</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM BUTTON -->
+    <button class="sticky-bottom" onclick="placeOrder()">
+        PLACE ORDER · <span id="btnTotal">₱0</span>
+    </button>
+    <div class="prototype-note">Prototype: no real payment is taken. Orders are saved in this browser only.</div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        let cart = JSON.parse(localStorage.getItem('alboraCart')) || [];
+
+        // Render items pagka-load ng page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutSummary();
+        });
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkoutItems');
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color:#888; font-size:13px;">Walang laman ang cart mo.</p>';
+                return;
+            }
+
+            cart.forEach(item => {
+                let safePrice = Number(item.price) || 0;
+                let safeQty = Number(item.qty) || 1;
+                subtotal += safePrice * safeQty;
+
+                container.innerHTML += `
+                    <div class="summary-item">
+                        <div class="summary-item-left">
+                            <div class="summary-img">
+                                ${item.image || '<svg viewBox="0 0 100 125"><circle cx="50" cy="50" r="25" fill="#C5A253" opacity="0.8"/></svg>'}
+                            </div>
+                            <div class="summary-info">
+                                <h4>${item.name}</h4>
+                                <p>${item.category || 'Item'} · Qty ${safeQty}</p>
+                            </div>
+                        </div>
+                        <div class="summary-price">₱${(safePrice * safeQty).toLocaleString()}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('checkoutSubtotal').textContent = '₱' + subtotal.toLocaleString();
+            document.getElementById('checkoutTotal').textContent = '₱' + subtotal.toLocaleString();
+            document.getElementById('btnTotal').textContent = '₱' + subtotal.toLocaleString();
+            document.getElementById('qrTotalAmount').textContent = '₱' + subtotal.toLocaleString();
+        }
+
+        function selectPayment(method, element) {
+            // Alisin active sa lahat
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+            // Gawing active yung pinindot
+            element.classList.add('active');
+            
+            // Palitan yung text sa QR
+            const label = document.getElementById('qrLabel');
+            const qrBox = document.getElementById('qrBox');
+
+            if (method === 'gcash') {
+                label.textContent = "SCAN TO PAY WITH GCASH";
+                qrBox.textContent = "Your GCash QR code goes here";
+            } else {
+                label.textContent = "SCAN TO PAY WITH MARIBANK";
+                qrBox.textContent = "Your Maribank QR code goes here";
+            }
+        }
+                   
+                   function placeOrder() {
+            if (cart.length === 0) {
+                alert("Your bag is empty!");
+                return;
+            }
+            
+            // Kunin ang mga info sa form
+            let fullName = document.querySelector('input[type="text"]').value;
+            let mobile = document.querySelector('input[type="tel"]').value;
+            let houseStreet = document.querySelectorAll('input[type="text"]')[1].value;
+            let barangay = document.querySelectorAll('input[type="text"]')[2].value;
+            let city = document.querySelectorAll('input[type="text"]')[3].value;
+            let province = document.querySelectorAll('input[type="text"]')[4].value;
+            let refNo = document.querySelectorAll('input[type="text"]')[6].value; // Yung Payment Ref No.
+            
+            if(!fullName || !mobile || !houseStreet || !city) {
+                alert("Please fill in your Name, Mobile, and Address.");
+                return;
+            }
+
+            let fullAddress = `${houseStreet}, ${barangay}, ${city}, ${province}`;
+
+            // I-save ang order
+            let orders = JSON.parse(localStorage.getItem('alboraOrders')) || [];
+            let newOrder = {
+                id: "ALB-" + Math.floor(Math.random() * 1000000),
+                date: new Date().toLocaleString(),
+                items: cart,
+                total: document.getElementById('checkoutTotal').innerText,
+                customer: {
+                    name: fullName,
+                    phone: mobile,
+                    address: fullAddress
+                },
+                paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+                referenceNo: refNo
+            };
+            
+            orders.push(newOrder);
+            localStorage.setItem('alboraOrders', JSON.stringify(orders));
+
+            // Clear cart
+            localStorage.removeItem('alboraCart');
+
+            // Lumipat sa success.html
+            window.location.href = 'success.html';
+        }
+    </script>
+</body>
+</html>
